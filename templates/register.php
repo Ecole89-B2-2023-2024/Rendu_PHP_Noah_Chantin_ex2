@@ -1,3 +1,8 @@
+<?php
+if (isset($_SESSION["username"])) {
+    header("Location: index.php");
+}
+?>
 <main>
     <form class="m-5" action="#" method="post">
         <div class="mb-3">
@@ -20,6 +25,7 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <?php
+    var_dump($_SESSION);
     // var_dump($_POST);
     $erreur = [];
     $message = [];
@@ -48,14 +54,14 @@
         array_push($erreur, 'Le mdp n\'est pas valide');
     }
     // var_dump($message);
-    // var_dump($erreur);
-    //print_r($_SERVER);
+// var_dump($erreur);
     if ($erreur == []) {
         require("./inc/db.php");
 
         $encrypted_password = hash('sha512', $_POST['password']);
-        $request = $pdo->prepare("INSERT INTO user (firstname, lastname, email, password) VALUES (?, ?, ?, ?);");
+        $request = $pdo->prepare("INSERT INTO utilisateur (firstname, lastname, email, password) VALUES (?, ?, ?, ?);");
         $request->execute([$_POST['firstname'], $_POST['lastname'], $_POST['email'], $encrypted_password]);
+        header("Location: connexion.php");
     }
 
     ?>

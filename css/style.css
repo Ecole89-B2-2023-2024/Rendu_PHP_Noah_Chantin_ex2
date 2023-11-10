@@ -1,8 +1,0 @@
-textarea {
-    display: block;
-    width: 100%;
-    overflow: hidden;
-    min-height: 40px;
-    line-height: 20px;
-    resize: none;
-}

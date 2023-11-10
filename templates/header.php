@@ -1,3 +1,6 @@
+<?php
+session_start()
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link href="./css/style.css" rel="stylesheet" />
     <title>Exercice php</title>
 </head>
 
@@ -26,11 +28,34 @@
                             <a class="nav-link active" aria-current="page" href="./index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./article_index.php">Ecrire un article</a>
+                            <a class="nav-link" href="./liste_article.php">liste des article</a>
                         </li>
+                        <?php if (!isset($_SESSION["username"])): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./register.php">Inscription</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./connexion.php">Connexion</a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./new_article.php">Ecrire un article</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./logout.php">Déconnexion</a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <div class="me-5">
+                        <?php
+                        if (isset($_SESSION["username"])) {
+                            echo "Bienvenue " . ucfirst($_SESSION["username"]) . "vous êtes connecté en tant que " . $_SESSION['role'];
+                        }
+                        ?>
+                    </div>
+                    <form class="d-flex" role="search" action="./liste_resultat.php">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                            name="criteria">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>
